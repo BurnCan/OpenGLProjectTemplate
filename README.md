@@ -37,8 +37,8 @@ pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-cmake mingw-w64-x86_64-mak
 ### 4. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/BurnCan/OpenGLProjectTemplate
+cd OpenGLProjectTemplate
 ```
 
 ### 5. Build
@@ -53,7 +53,7 @@ mingw32-make
 
 ```bash
 cd bin
-./YourAppExecutableName.exe
+./OpenGLApp.exe
 ```
 
 ---
@@ -69,8 +69,8 @@ brew install cmake git
 ### 2. Build
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/BurnCan/OpenGLProjectTemplate
+cd OpenGLProjectTemplate
 mkdir build && cd build
 cmake ..
 make
@@ -79,8 +79,9 @@ make
 ### 3. Run
 
 ```bash
-cd bin
-./YourAppExecutableName
+cd bin/OpenGLApp.app/Contents/MacOS
+./OpenGLApp
+
 ```
 
 ---
@@ -97,8 +98,8 @@ sudo apt install build-essential cmake git libgl1-mesa-dev libx11-dev libxi-dev 
 ### 2. Build
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/BurnCan/OpenGLProjectTemplate
+cd OpenGLProjectTemplate
 mkdir build && cd build
 cmake ..
 make
@@ -123,10 +124,10 @@ If you're using `FetchContent` in CMake, these are **not required**.
 
 ---
 
-## 📁 Project Structure Example
+## 📁 Project Structure Example (windows)
 
 ```
-your-repo-name/
+OpenGLProjectTemplate/
 ├── shaders/
 ├── src/
 ├── CMakeLists.txt
@@ -134,7 +135,7 @@ your-repo-name/
 └── build/
     └── bin/
 	├── shaders/
-        └── YourAppExecutableName
+        └── OpenGLApp.exe
 ```
 
 ---
