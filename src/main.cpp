@@ -30,7 +30,7 @@ int main()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // MacOS
 #endif
 
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Triangle + ImGui", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Hello Triangle", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window\n";

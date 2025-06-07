@@ -127,7 +127,7 @@ If you're using `FetchContent` in CMake, these are **not required**.
 
 ```
 your-repo-name/
-├── backupshaders/
+├── shaders/
 ├── src/
 ├── CMakeLists.txt
 ├── README.md
