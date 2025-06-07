@@ -11,8 +11,17 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 
-# Copy shader files to the build directory
-file(COPY shaders DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+# Copy shader files to the appropriate location
+if(APPLE)
+    set(MACOSX_BUNDLE_BUNDLE_NAME "OpenGLApp")
+    set(MACOSX_BUNDLE_GUI_IDENTIFIER "com.example.openglapp")
+    set(MACOSX_BUNDLE TRUE)
+
+    set(SHADER_BUNDLE_PATH "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/OpenGLApp.app/Contents/Resources")
+    file(COPY shaders DESTINATION ${SHADER_BUNDLE_PATH})
+else()
+    file(COPY shaders DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endif()
 
 include(FetchContent)
 
@@ -45,7 +54,7 @@ FetchContent_MakeAvailable(imgui)
 # ----------- Manual GLAD Setup ------------ #
 
 add_library(glad STATIC
-  external/glad/src/glad.c  # Update the filename here to glad.c
+  external/glad/src/glad.c
 )
 target_include_directories(glad PUBLIC
   ${PROJECT_SOURCE_DIR}/external/glad/include
@@ -68,7 +77,7 @@ set(IMGUI_SOURCES
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS src/*.h)
 
-add_executable(OpenGLApp
+add_executable(OpenGLApp MACOSX_BUNDLE
   ${SRC_FILES}
   ${HEADER_FILES}
   ${IMGUI_SOURCES}
