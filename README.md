@@ -127,12 +127,13 @@ If you're using `FetchContent` in CMake, these are **not required**.
 
 ```
 your-repo-name/
-├── shaders/
+├── backupshaders/
 ├── src/
 ├── CMakeLists.txt
 ├── README.md
 └── build/
     └── bin/
+	├── shaders/
         └── YourAppExecutableName
 ```
 
