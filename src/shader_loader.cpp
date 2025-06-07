@@ -1,4 +1,4 @@
-#include "shader_loader.h"
+﻿#include "shader_loader.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -21,8 +21,11 @@ std::string getExecutableDir() {
 
 #if defined(__APPLE__)
     uint32_t size = sizeof(path);
-    if (_NSGetExecutablePath(path, &size) == 0)
-        return std::filesystem::path(path).parent_path().string();
+    if (_NSGetExecutablePath(path, &size) == 0) {
+        auto execPath = std::filesystem::path(path).parent_path();
+        auto resourcesPath = execPath / ".." / "Resources"; // .app/Contents/MacOS → ../Resources
+        return std::filesystem::canonical(resourcesPath).string();
+    }
 #elif defined(_WIN32)
     GetModuleFileNameA(NULL, path, MAX_PATH);
     return std::filesystem::path(path).parent_path().string();
@@ -37,19 +40,28 @@ std::string getExecutableDir() {
 
 // Load shader source from file relative to executable
 std::string loadShaderSource(const std::string& filename) {
-    std::string shaderPath = getExecutableDir() + "/shaders/" + filename;
+    std::string shaderPath = "shaders/" + filename;
     std::ifstream shaderFile(shaderPath);
 
     std::cout << "Trying to load shader from: " << shaderPath << std::endl;
+
+    if (!shaderFile.is_open()) {
+        // Fallback to executable-relative path
+        std::string fallbackPath = getExecutableDir() + "/shaders/" + filename;
+        std::cout << "Fallback: trying to load shader from: " << fallbackPath << std::endl;
+        shaderFile.open(fallbackPath);
+        shaderPath = fallbackPath;
+    }
 
     if (!shaderFile.is_open()) {
         std::cerr << "Error: Could not open shader file at: " << shaderPath << std::endl;
         return "";
     }
 
+    std::cout << "Shader loaded successfully from: " << shaderPath << std::endl;
+
     std::stringstream buffer;
     buffer << shaderFile.rdbuf();
-    std::cout << "Shader loaded successfully from: " << shaderPath << std::endl;
     return buffer.str();
 }
 

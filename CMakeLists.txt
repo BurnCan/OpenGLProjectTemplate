@@ -12,7 +12,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
 
 # Copy shader files to the build directory
-file(COPY shaders DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+if(APPLE)
+    set(APP_RESOURCES "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/OpenGLApp.app/Contents/Resources")
+    file(COPY shaders DESTINATION ${APP_RESOURCES})
+else()
+    file(COPY shaders DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+endif()
 
 include(FetchContent)
 
