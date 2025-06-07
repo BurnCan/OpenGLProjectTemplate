@@ -89,7 +89,12 @@ target_link_libraries(OpenGLApp
   PRIVATE
     glad
     glfw
-    $<$<PLATFORM_ID:Windows>:opengl32>
-    $<$<PLATFORM_ID:Darwin>:-framework OpenGL>
-    $<$<AND:$<PLATFORM_ID:Linux>,$<NOT:$<PLATFORM_ID:Darwin>>>:GL dl pthread>
 )
+
+if(WIN32)
+    target_link_libraries(OpenGLApp PRIVATE opengl32)
+elseif(APPLE)
+    target_link_libraries(OpenGLApp PRIVATE "-framework OpenGL")
+elseif(UNIX)
+    target_link_libraries(OpenGLApp PRIVATE GL dl pthread)
+endif()
